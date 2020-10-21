@@ -191,5 +191,14 @@ namespace ISIP_FrameworkGUI
                 }
             }
         }
+
+        private void Em_Click(object sender, RoutedEventArgs e)
+        {
+            if (mainControl.OriginalGrayscaleImage != null)
+            {
+
+                mainControl.ProcessedGrayscaleImage = Tools.EM(mainControl.OriginalGrayscaleImage);
+            }
+        }
     }
 }

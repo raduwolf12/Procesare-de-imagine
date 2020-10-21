@@ -28,8 +28,8 @@
                 <MenuItem Header="Magnifyer" Name="Magnifyer_ON" Click="Magnifyer_ON_Click" IsCheckable="True" IsEnabled="False"/>
                 <MenuItem Header="GLevels_on_Row" Name="GL_ROW_ON" IsCheckable="True" Click="GL_ROW_ON_Click" IsEnabled="False"/>
                 <MenuItem Header="Invert" Click="Invert_Click"/>
-
-             </MenuItem>
+                <MenuItem Header="EM" Click="Em_Click"/>
+            </MenuItem>
             <MenuItem Header="Filters">
                              
             </MenuItem>
