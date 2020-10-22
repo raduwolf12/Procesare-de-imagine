@@ -20,6 +20,7 @@ using ISIP_UserControlLibrary;
 
 using ISIP_Algorithms.Tools;
 using ISIP_FrameworkHelpers;
+using System.Threading;
 
 namespace ISIP_FrameworkGUI
 {
@@ -191,14 +192,23 @@ namespace ISIP_FrameworkGUI
                 }
             }
         }
-
+        
         private void Em_Click(object sender, RoutedEventArgs e)
         {
-            if (mainControl.OriginalGrayscaleImage != null)
-            {
 
-                mainControl.ProcessedGrayscaleImage = Tools.EM(mainControl.OriginalGrayscaleImage);
+            UserInputDialog dlg = new UserInputDialog("EM Dialog", new string[] { "m value:", "E value:" });
+           
+            if (mainControl.OriginalGrayscaleImage != null)
+                {
+                if (dlg.ShowDialog().Value == true)
+                {
+                    double t1 = (double)dlg.Values[0];
+                    double t2 = (double)dlg.Values[1];
+                    mainControl.ProcessedGrayscaleImage = Tools.EM(mainControl.OriginalGrayscaleImage, t1, t2);
+                }
             }
         }
+       
+        
     }
 }
