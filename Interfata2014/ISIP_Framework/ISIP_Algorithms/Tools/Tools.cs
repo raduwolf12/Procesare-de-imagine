@@ -23,19 +23,19 @@ namespace ISIP_Algorithms.Tools
         }
         public static List<int> EMLookup(double m, double E)
         {
-            double c = Math.Pow(m, E) / (Math.Pow(255, E+1)+ Math.Pow(m, E)*255);
+            double c = Math.Pow(m, E) / (Math.Pow(255, E + 1) + Math.Pow(m, E) * 255);
 
-            List<int> LUT = new List<int>();            
-            for (int i = 0; i<256; i++)
+            List<int> LUT = new List<int>();
+            for (int i = 0; i < 256; i++)
             {
-                double f =255 * (Math.Pow(i, E) / (Math.Pow(i, E) + Math.Pow(m, E)) + c*i);
+                double f = 255 * (Math.Pow(i, E) / (Math.Pow(i, E) + Math.Pow(m, E)) + c * i);
                 LUT.Add((int)f);
             }
             return LUT;
         }
         public static Image<Gray, byte> EM(Image<Gray, byte> InputImage, double m, double E)
         {
-            List<int> EMLut = EMLookup(m,E);
+            List<int> EMLut = EMLookup(m, E);
 
             Image<Gray, byte> Result = new Image<Gray, byte>(InputImage.Size);
             for (int y = 0; y < InputImage.Height; y++)
@@ -45,8 +45,80 @@ namespace ISIP_Algorithms.Tools
                     Result.Data[y, x, 0] = (byte)(EMLut.ElementAt(InputImage.Data[y, x, 0]));
                 }
             }
-            
+
             return Result;
         }
+
+        public static Image<Gray, byte> Binarizare_color_3D(Image<Bgr, byte> InputImage, int xT, int yT, double treshhold)
+        {
+            Image<Gray, byte> Result = new Image<Gray, byte>(InputImage.Size);
+
+            Bgr pixel = InputImage[yT, xT];
+
+            double b0 = pixel.Blue;
+            double g0 = pixel.Green;
+            double r0 = pixel.Red;
+
+            Gray white = new Gray(255);
+            Gray black = new Gray(0);
+
+            for (int y = 0; y < InputImage.Height; y++)
+            {
+                for (int x = 0; x < InputImage.Width; x++)
+                {
+                    Bgr pixelx = InputImage[y, x];
+
+                    double bx = pixelx.Blue;
+                    double gx = pixelx.Green;
+                    double rx = pixelx.Red;
+                    double d = Math.Sqrt(Math.Pow(rx - r0, 2) + Math.Pow(gx - g0, 2) + Math.Pow(bx - b0, 2));
+                    if (d <= treshhold)
+                    {
+                        Result[y, x] = black;
+                    }
+                    else
+                    {
+                        Result[y, x] = white;
+                    }
+
+                }
+            }
+            return Result;
+        }
+
+        public static Image<Gray, byte> Binarizare_color_2D(Image<Bgr, byte> InputImage, int xT, int yT, double treshhold)
+        {
+            Image<Gray, byte> Result = new Image<Gray, byte>(InputImage.Size);
+
+            Bgr pixel = InputImage[yT, xT];
+
+            double g0 = pixel.Green;
+            double r0 = pixel.Red;
+
+            Gray white = new Gray(255);
+            Gray black = new Gray(0);
+
+            for (int y = 0; y < InputImage.Height; y++)
+            {
+                for (int x = 0; x < InputImage.Width; x++)
+                {
+                    Bgr pixelx = InputImage[y, x];
+                    double r = pixelx.Red;
+                    double g = pixelx.Green;
+                    double d = Math.Sqrt(Math.Pow(r - r0, 2) + Math.Pow(g - g0, 2));
+                    if (d <= treshhold)
+                    {
+                        Result[y, x] = black;
+                    }
+                    else
+                    {
+                        Result[y, x] = white;
+                    }
+                }
+            }
+
+            return Result;
+        }
+
     }
 }

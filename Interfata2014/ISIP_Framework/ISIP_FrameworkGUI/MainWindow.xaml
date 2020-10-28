@@ -29,6 +29,8 @@
                 <MenuItem Header="GLevels_on_Row" Name="GL_ROW_ON" IsCheckable="True" Click="GL_ROW_ON_Click" IsEnabled="False"/>
                 <MenuItem Header="Invert" Click="Invert_Click"/>
                 <MenuItem Header="EM" Click="Em_Click"/>
+                <MenuItem Header="Binarizare Color 3D" Click="Bnarizare_Color_3D" Name="BIN_COLOR_3D_ON" IsCheckable="True" IsEnabled="False"/>
+                <MenuItem Header="Binarizare Color 2D" Click="Bnarizare_Color_2D" Name="BIN_COLOR_2D_ON" IsCheckable="True" IsEnabled="False"/>
             </MenuItem>
             <MenuItem Header="Filters">
                              

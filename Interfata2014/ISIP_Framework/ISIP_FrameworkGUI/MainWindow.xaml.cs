@@ -36,6 +36,8 @@ namespace ISIP_FrameworkGUI
         Windows.GLine RowDisplay;
         bool Magif_SHOW = false;
         bool GL_ROW_SHOW = false;
+        bool BIN_COLOR_2D = false;
+        bool BIN_COLOR_3D = false;
         System.Windows.Point lastClick = new System.Windows.Point(0, 0);
         System.Windows.Point upClick = new System.Windows.Point(0, 0);
 
@@ -83,6 +85,59 @@ namespace ISIP_FrameworkGUI
                 }
                 if (mainControl.OriginalGrayscaleImage != null) MagnifWindow.RedrawMagnifyer(lastClick);
             }
+
+            if (BIN_COLOR_2D_ON.IsChecked)
+            {
+                DrawHelper.DrawAndGetLine(mainControl.OriginalImageCanvas, new System.Windows.Point(0, lastClick.Y),
+                   new System.Windows.Point(mainControl.OriginalImageCanvas.Width - 1, lastClick.Y), System.Windows.Media.Brushes.Red, 1);
+                DrawHelper.DrawAndGetLine(mainControl.OriginalImageCanvas, new System.Windows.Point(lastClick.X, 0),
+                    new System.Windows.Point(lastClick.X, mainControl.OriginalImageCanvas.Height - 1), System.Windows.Media.Brushes.Red, 1);
+                DrawHelper.DrawAndGetRectangle(mainControl.OriginalImageCanvas, new System.Windows.Point(lastClick.X - 4, lastClick.Y - 4),
+                    new System.Windows.Point(lastClick.X + 4, lastClick.Y + 4), System.Windows.Media.Brushes.Red);
+                if (mainControl.ProcessedGrayscaleImage != null)
+                {
+                    DrawHelper.DrawAndGetLine(mainControl.ProcessedImageCanvas, new System.Windows.Point(0, lastClick.Y),
+                    new System.Windows.Point(mainControl.ProcessedImageCanvas.Width - 1, lastClick.Y), System.Windows.Media.Brushes.Red, 1);
+                    DrawHelper.DrawAndGetLine(mainControl.ProcessedImageCanvas, new System.Windows.Point(lastClick.X, 0),
+                        new System.Windows.Point(lastClick.X, mainControl.ProcessedImageCanvas.Height - 1), System.Windows.Media.Brushes.Red, 1);
+                    DrawHelper.DrawAndGetRectangle(mainControl.ProcessedImageCanvas, new System.Windows.Point(lastClick.X - 4, lastClick.Y - 4),
+                        new System.Windows.Point(lastClick.X + 4, lastClick.Y + 4), System.Windows.Media.Brushes.Red);
+                }
+                UserInputDialog dlg = new UserInputDialog("3D Dialog", new string[] { "threshold:" });
+
+                if (dlg.ShowDialog().Value == true)
+                {
+                    double t1 = (double)dlg.Values[0];
+                    mainControl.ProcessedGrayscaleImage = Tools.Binarizare_color_2D(mainControl.OriginalColorImage, (int)lastClick.X, (int)lastClick.Y, t1);
+                }
+            }
+            if (BIN_COLOR_3D_ON.IsChecked)
+            {
+
+                DrawHelper.DrawAndGetLine(mainControl.OriginalImageCanvas, new System.Windows.Point(0, lastClick.Y),
+                    new System.Windows.Point(mainControl.OriginalImageCanvas.Width - 1, lastClick.Y), System.Windows.Media.Brushes.Red, 1);
+                DrawHelper.DrawAndGetLine(mainControl.OriginalImageCanvas, new System.Windows.Point(lastClick.X, 0),
+                    new System.Windows.Point(lastClick.X, mainControl.OriginalImageCanvas.Height - 1), System.Windows.Media.Brushes.Red, 1);
+                DrawHelper.DrawAndGetRectangle(mainControl.OriginalImageCanvas, new System.Windows.Point(lastClick.X - 4, lastClick.Y - 4),
+                    new System.Windows.Point(lastClick.X + 4, lastClick.Y + 4), System.Windows.Media.Brushes.Red);
+                if (mainControl.ProcessedGrayscaleImage != null)
+                {
+                    DrawHelper.DrawAndGetLine(mainControl.ProcessedImageCanvas, new System.Windows.Point(0, lastClick.Y),
+                    new System.Windows.Point(mainControl.ProcessedImageCanvas.Width - 1, lastClick.Y), System.Windows.Media.Brushes.Red, 1);
+                    DrawHelper.DrawAndGetLine(mainControl.ProcessedImageCanvas, new System.Windows.Point(lastClick.X, 0),
+                        new System.Windows.Point(lastClick.X, mainControl.ProcessedImageCanvas.Height - 1), System.Windows.Media.Brushes.Red, 1);
+                    DrawHelper.DrawAndGetRectangle(mainControl.ProcessedImageCanvas, new System.Windows.Point(lastClick.X - 4, lastClick.Y - 4),
+                        new System.Windows.Point(lastClick.X + 4, lastClick.Y + 4), System.Windows.Media.Brushes.Red);
+                }
+                UserInputDialog dlg = new UserInputDialog("3D Dialog", new string[] { "threshold:" });
+
+                if (dlg.ShowDialog().Value == true)
+                {
+                    double t1 = (double)dlg.Values[0];
+                    mainControl.ProcessedGrayscaleImage = Tools.Binarizare_color_3D(mainControl.OriginalColorImage, (int)lastClick.X, (int)lastClick.Y, t1);
+                }
+            }
+
         }
 
         private void openGrayscaleImageMenuItem_Click(object sender, RoutedEventArgs e)
@@ -98,6 +153,8 @@ namespace ISIP_FrameworkGUI
             mainControl.LoadImageDialog(ImageType.Color);
             Magnifyer_ON.IsEnabled = true;
             GL_ROW_ON.IsEnabled = true;
+            BIN_COLOR_2D_ON.IsEnabled = true;
+            BIN_COLOR_3D_ON.IsEnabled = true;
         }
 
         private void saveProcessedImageMenuItem_Click(object sender, RoutedEventArgs e)
@@ -208,7 +265,40 @@ namespace ISIP_FrameworkGUI
                 }
             }
         }
-       
-        
+
+
+        private void Bnarizare_Color_3D(object sender, RoutedEventArgs e)
+        {
+            if (mainControl.OriginalColorImage != null)
+            {
+                if (BIN_COLOR_3D == true)
+                {
+                    //UserInputDialog dlg = new UserInputDialog("3D Dialog", new string[] { "threshold:" });
+
+                    //if (dlg.ShowDialog().Value == true)
+                    //{
+                    //    double t1 = (double)dlg.Values[0];
+                    //    mainControl.ProcessedGrayscaleImage = Tools.Binarizare_color_3D(mainControl.OriginalColorImage, (int)lastClick.X, (int)lastClick.Y, t1);
+                    //}
+                }
+                else BIN_COLOR_3D = true;
+
+                
+            }
+        }
+
+        private void Bnarizare_Color_2D(object sender, RoutedEventArgs e)
+        {
+            if (mainControl.OriginalColorImage != null)
+            {
+                if (BIN_COLOR_3D == true)
+                {
+
+                }
+                else BIN_COLOR_3D = true;
+
+
+            }
+        }
     }
 }
