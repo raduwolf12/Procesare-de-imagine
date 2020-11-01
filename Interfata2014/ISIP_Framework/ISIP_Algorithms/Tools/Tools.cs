@@ -94,6 +94,11 @@ namespace ISIP_Algorithms.Tools
 
             double g0 = pixel.Green;
             double r0 = pixel.Red;
+            double b0 = pixel.Blue;
+
+
+            double nr0 = r0 / (r0 + g0 + b0);
+            double ng0 = g0 / (r0 + g0 + b0);
 
             Gray white = new Gray(255);
             Gray black = new Gray(0);
@@ -105,7 +110,12 @@ namespace ISIP_Algorithms.Tools
                     Bgr pixelx = InputImage[y, x];
                     double r = pixelx.Red;
                     double g = pixelx.Green;
-                    double d = Math.Sqrt(Math.Pow(r - r0, 2) + Math.Pow(g - g0, 2));
+                    double b = pixelx.Blue;
+
+                    double nr = r / (r + g + b);
+                    double ng = r / (r + g + b);
+
+                    double d = Math.Sqrt(Math.Pow(nr - nr0, 2) + Math.Pow(ng - ng0, 2));
                     if (d <= treshhold)
                     {
                         Result[y, x] = black;

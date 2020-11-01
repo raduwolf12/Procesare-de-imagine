@@ -273,13 +273,7 @@ namespace ISIP_FrameworkGUI
             {
                 if (BIN_COLOR_3D == true)
                 {
-                    //UserInputDialog dlg = new UserInputDialog("3D Dialog", new string[] { "threshold:" });
-
-                    //if (dlg.ShowDialog().Value == true)
-                    //{
-                    //    double t1 = (double)dlg.Values[0];
-                    //    mainControl.ProcessedGrayscaleImage = Tools.Binarizare_color_3D(mainControl.OriginalColorImage, (int)lastClick.X, (int)lastClick.Y, t1);
-                    //}
+                  
                 }
                 else BIN_COLOR_3D = true;
 
@@ -291,11 +285,11 @@ namespace ISIP_FrameworkGUI
         {
             if (mainControl.OriginalColorImage != null)
             {
-                if (BIN_COLOR_3D == true)
+                if (BIN_COLOR_2D == true)
                 {
 
                 }
-                else BIN_COLOR_3D = true;
+                else BIN_COLOR_2D = true;
 
 
             }
