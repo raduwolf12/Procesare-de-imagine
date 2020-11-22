@@ -294,5 +294,32 @@ namespace ISIP_FrameworkGUI
 
             }
         }
+
+        private void Filtrare_bilaterala_Click(object sender, RoutedEventArgs e)
+        {
+            UserInputDialog dlg = new UserInputDialog("Filtrare bilaterala Dialog", new string[] { "σd value:", "σr value:" });
+            //UserInputDialog dlg = new UserInputDialog("Filtrare Gausian Dialog", new string[] { "σd value: " });
+            if (mainControl.OriginalGrayscaleImage != null)
+            {
+                if (dlg.ShowDialog().Value == true)
+                {
+                    double d1 = (double)dlg.Values[0];
+                    double d2 = (double)dlg.Values[1];
+                    mainControl.ProcessedGrayscaleImage = FilterTools.Filtrare_bilaterala(mainControl.OriginalGrayscaleImage, d1,d2);
+                }
+            }
+        }
+        private void Filtrare_gausiana_Click(object sender, RoutedEventArgs e)
+        {
+            UserInputDialog dlg = new UserInputDialog("Filtrare Gausian Dialog", new string[] { "σd value: " });
+            if (mainControl.OriginalGrayscaleImage != null)
+            {
+                if (dlg.ShowDialog().Value == true)
+                {
+                    double d1 = (double)dlg.Values[0];
+                    mainControl.ProcessedGrayscaleImage = FilterTools.FiltruGausian(mainControl.OriginalGrayscaleImage, d1);
+                }
+            }
+        }
     }
 }

@@ -74,11 +74,11 @@ namespace ISIP_Algorithms.Tools
                     double d = Math.Sqrt(Math.Pow(rx - r0, 2) + Math.Pow(gx - g0, 2) + Math.Pow(bx - b0, 2));
                     if (d <= treshhold)
                     {
-                        Result[y, x] = black;
+                        Result[y, x] = white;
                     }
                     else
                     {
-                        Result[y, x] = white;
+                        Result[y, x] = black;
                     }
 
                 }
@@ -113,16 +113,16 @@ namespace ISIP_Algorithms.Tools
                     double b = pixelx.Blue;
 
                     double nr = r / (r + g + b);
-                    double ng = r / (r + g + b);
+                    double ng = g / (r + g + b);
 
                     double d = Math.Sqrt(Math.Pow(nr - nr0, 2) + Math.Pow(ng - ng0, 2));
                     if (d <= treshhold)
                     {
-                        Result[y, x] = black;
+                        Result[y, x] = white;
                     }
                     else
                     {
-                        Result[y, x] = white;
+                        Result[y, x] = black;
                     }
                 }
             }
@@ -130,5 +130,6 @@ namespace ISIP_Algorithms.Tools
             return Result;
         }
 
+     
     }
 }
