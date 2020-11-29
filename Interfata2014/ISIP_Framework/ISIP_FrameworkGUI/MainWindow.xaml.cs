@@ -321,5 +321,18 @@ namespace ISIP_FrameworkGUI
                 }
             }
         }
+
+        private void Sobel_orizontal_Click(object sender, RoutedEventArgs e)
+        {
+            UserInputDialog dlg = new UserInputDialog("Filtrul directional Sobel - margini orizontale Dialog", new string[] { "t value: " });
+            if (mainControl.OriginalGrayscaleImage != null)
+            {
+                if (dlg.ShowDialog().Value == true)
+                {
+                    double d1 = (double)dlg.Values[0];
+                    mainControl.ProcessedGrayscaleImage = FilterTools.FiltruSobelOrizontal(mainControl.OriginalGrayscaleImage, d1);
+                }
+            }
+        }
     }
 }
