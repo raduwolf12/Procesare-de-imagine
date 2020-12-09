@@ -130,6 +130,82 @@ namespace ISIP_Algorithms.Tools
             return Result;
         }
 
-     
+        public static Image<Gray, byte> Binarizare(double prag, Image<Gray, byte> originalImage)
+        {
+            Image<Gray, byte> resultImage = new Image<Gray, byte>(originalImage.Size);
+
+            for (int index1 = 0; index1 < originalImage.Height; index1++)
+                for (int index2 = 0; index2 < originalImage.Width; index2++)
+                {
+                    if (originalImage.Data[index1, index2, 0] < prag)
+                    {
+                        resultImage.Data[index1, index2, 0] = 255;
+                    }
+                    else
+                    {
+                        resultImage.Data[index1, index2, 0] = 0;
+                    }
+                }
+            return resultImage;
+        }
+        public static Image<Gray, byte> Xor(double thresold, Image<Gray, byte> originalImage)
+        {
+            Image<Gray, byte> resultImage = new Image<Gray, byte>(originalImage.Size);
+            resultImage = Binarizare(thresold, originalImage);
+
+            Image<Gray, byte> resultImageXor = new Image<Gray, byte>(resultImage.Size);
+            Image<Gray, byte> resultImage2 = new Image<Gray, byte>(resultImage.Data);
+
+            for (int y = 1; y < resultImage.Height - 1; y++)
+            {
+                for (int x = 1; x < resultImage.Width - 1; x++)
+                {
+                    if (resultImage.Data[y, x, 0] == 255 && resultImage.Data[y, x - 1, 0] == 0)
+                    {
+                        resultImage2.Data[y, x, 0] = 0;
+                    }else
+                         if (resultImage.Data[y, x, 0] == 255 &&  resultImage.Data[y - 1, x - 1, 0] == 0)
+                    {
+                        resultImage2.Data[y, x, 0] = 0;
+                    }else
+                         if (resultImage.Data[y, x, 0] == 255 &&  resultImage.Data[y - 1, x, 0] == 0 )
+                    {
+                        resultImage2.Data[y, x, 0] = 0;
+                    }
+                    else
+                         if (resultImage.Data[y, x, 0] == 255 &&  resultImage.Data[y + 1, x + 1, 0] == 0)
+                    {
+                        resultImage2.Data[y, x, 0] = 0;
+                    }
+                }
+            }
+
+
+            for (int y = 0; y < resultImage.Height; y++)
+            {
+                for (int x = 0; x < resultImage.Width; x++)
+                {
+                    if (resultImage.Data[y, x, 0] == 0 && resultImage2.Data[y, x, 0] == 0)
+                    {
+                        resultImageXor.Data[y, x, 0] = 0;
+                    }
+                    else if (resultImage.Data[y, x, 0] == 0 && resultImage2.Data[y, x, 0] == 255)
+                    {
+                        resultImageXor.Data[y, x, 0] = 255;
+                    }
+                    else if (resultImage.Data[y, x, 0] == 255 && resultImage2.Data[y, x, 0] == 0)
+                    {
+                        resultImageXor.Data[y, x, 0] = 255;
+                    }
+                    else
+                    {
+                        resultImageXor.Data[y, x, 0] = 0;
+                    }
+                }
+            }
+
+            return resultImageXor;
+
+        }
     }
 }

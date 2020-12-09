@@ -159,7 +159,12 @@ namespace ISIP_Algorithms.Tools
             Image<Gray, byte> Result = Sobel(InputImage,treshold);
             return Result;
         }
-       
+        public static Image<Gray, byte> FiltruSobelVertical(Image<Gray, byte> InputImage, double treshold)
+        {
+            Image<Gray, byte> Result = SobelVertical(InputImage, treshold);
+            return Result;
+        }
+
         public static Image<Gray, byte> Sobel(Image<Gray, byte> InputImage, double t)
         {
             Image<Gray, byte> Result = new Image<Gray, byte>(InputImage.Size);            
@@ -203,7 +208,63 @@ namespace ISIP_Algorithms.Tools
                         {
                             Result.Data[y, x, 0] = (byte)(255);
                         }
+                        else
+                        {
+                            Result.Data[y, x, 0] = (byte)(0);
+                        }
+                    }
+                }
+            }
 
+            return Result;
+        }
+        public static Image<Gray, byte> SobelVertical(Image<Gray, byte> InputImage, double t)
+        {
+            Image<Gray, byte> Result = new Image<Gray, byte>(InputImage.Size);
+
+            double[,] Sx = new double[3, 3] { { -1, 0, 1 }, { -2, 0, 2 }, { -1, 0, 1 } };
+            double[,] Sy = new double[3, 3] { { -1, -2, -1 }, { 0, 0, 0 }, { 1, 2, 1 } };
+            const double rad = 180 / Math.PI;
+
+            for (int y = 1; y < InputImage.Height - 1; y++)
+            {
+                for (int x = 1; x < InputImage.Width - 1; x++)
+                {
+                    double Fx = 0;
+                    double Fy = 0;
+                    for (int i = 0; i <= 2; i++)
+                    {
+                        for (int j = 0; j <= 2; j++)
+                        {
+                            Fx += InputImage.Data[y + i - 1, x + j - 1, 0] * Sx[i, j];
+                            Fy += InputImage.Data[y + i - 1, x + j - 1, 0] * Sy[i, j];
+                        }
+                    }
+
+                    double grad = Math.Sqrt(Fx * Fx + Fy * Fy);
+                    double theta = 0;
+
+                    if (grad < t)
+                    {
+                        Result.Data[y, x, 0] = (byte)(0);
+                    }
+                    else
+                    {
+                        theta = Math.Atan2(Fy, Fx);
+                        double grade = theta * rad;
+
+                        if (grade >= -180 && grade <= -175)
+                        {
+                            Result.Data[y, x, 0] = (byte)(255);
+                        }
+                        else if (grade >= -5 && grade <= 5)
+                        {
+                            Result.Data[y, x, 0] = (byte)(255);
+                        }
+                        else if (grade >= 175 && grade <= 180)
+                        {
+                            Result.Data[y, x, 0] = (byte)(255);
+                        }
                         else
                         {
                             Result.Data[y, x, 0] = (byte)(0);

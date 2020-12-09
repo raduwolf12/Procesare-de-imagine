@@ -295,6 +295,20 @@ namespace ISIP_FrameworkGUI
             }
         }
 
+        private void Binarizare(object sender, RoutedEventArgs e)
+        {
+            UserInputDialog dlg = new UserInputDialog("Binarizare", new string[] { "σd value: " });
+
+            if (mainControl.OriginalGrayscaleImage != null)
+            {
+
+                if (dlg.ShowDialog().Value == true)
+                {
+                    double d1 = (double)dlg.Values[0];
+                    mainControl.ProcessedGrayscaleImage = Tools.Binarizare(d1, mainControl.OriginalGrayscaleImage);
+                }
+            }
+        }
         private void Filtrare_bilaterala_Click(object sender, RoutedEventArgs e)
         {
             UserInputDialog dlg = new UserInputDialog("Filtrare bilaterala Dialog", new string[] { "σd value:", "σr value:" });
@@ -332,6 +346,26 @@ namespace ISIP_FrameworkGUI
                     double d1 = (double)dlg.Values[0];
                     mainControl.ProcessedGrayscaleImage = FilterTools.FiltruSobelOrizontal(mainControl.OriginalGrayscaleImage, d1);
                 }
+            }
+        }
+        private void Sobel_vertical_Click(object sender, RoutedEventArgs e)
+        {
+            UserInputDialog dlg = new UserInputDialog("Filtrul directional Sobel - margini orizontale Dialog", new string[] { "t value: " });
+            if (mainControl.OriginalGrayscaleImage != null)
+            {
+                if (dlg.ShowDialog().Value == true)
+                {
+                    double d1 = (double)dlg.Values[0];
+                    mainControl.ProcessedGrayscaleImage = FilterTools.FiltruSobelVertical(mainControl.OriginalGrayscaleImage, d1);
+                }
+            }
+        }
+
+        private void XOR_Click(object sender, RoutedEventArgs e)
+        {
+            if (mainControl.OriginalGrayscaleImage != null)
+            {
+                mainControl.ProcessedGrayscaleImage = Tools.Xor(100,mainControl.OriginalGrayscaleImage);
             }
         }
     }
