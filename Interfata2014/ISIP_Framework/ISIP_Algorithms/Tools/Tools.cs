@@ -139,61 +139,145 @@ namespace ISIP_Algorithms.Tools
                 {
                     if (originalImage.Data[index1, index2, 0] < prag)
                     {
-                        resultImage.Data[index1, index2, 0] = 255;
+                        resultImage.Data[index1, index2, 0] = 0;
                     }
                     else
                     {
-                        resultImage.Data[index1, index2, 0] = 0;
+                        resultImage.Data[index1, index2, 0] = 255;
                     }
                 }
             return resultImage;
         }
-        public static Image<Gray, byte> Xor(double thresold, Image<Gray, byte> originalImage)
+
+        public static Image<Gray,byte> Dilatare(Image<Gray, byte> imgBinarizata)
+        {
+            Image<Gray, byte> resultImage = new Image<Gray, byte>(imgBinarizata.Data);
+
+            for (int y = 1; y < imgBinarizata.Height - 1; y++)
+            {
+                for (int x = 1; x < imgBinarizata.Width - 1; x++)
+                {
+                    if (imgBinarizata.Data[y, x, 0] == 255 && imgBinarizata.Data[y, x - 1, 0] == 0)
+                    {
+                        resultImage.Data[y, x, 0] = 0;
+                    }
+                    else
+                         if (imgBinarizata.Data[y, x, 0] == 255 && imgBinarizata.Data[y - 1, x - 1, 0] == 0)
+                    {
+                        resultImage.Data[y, x, 0] = 0;
+                    }
+                    else
+                         if (imgBinarizata.Data[y, x, 0] == 255 && imgBinarizata.Data[y - 1, x, 0] == 0)
+                    {
+                        resultImage.Data[y, x, 0] = 0;
+                    }
+                    else
+                         if (imgBinarizata.Data[y, x, 0] == 255 && imgBinarizata.Data[y + 1, x + 1, 0] == 0)
+                    {
+                        resultImage.Data[y, x, 0] = 0;
+                    }
+                    else
+                         if (imgBinarizata.Data[y, x, 0] == 255 && imgBinarizata.Data[y , x + 1, 0] == 0)
+                    {
+                        resultImage.Data[y, x, 0] = 0;
+                    }
+                    else
+                         if (imgBinarizata.Data[y, x, 0] == 255 && imgBinarizata.Data[y-1, x + 1, 0] == 0)
+                    {
+                        resultImage.Data[y, x, 0] = 0;
+                    }
+                    else
+                         if (imgBinarizata.Data[y, x, 0] == 255 && imgBinarizata.Data[y + 1, x , 0] == 0)
+                    {
+                        resultImage.Data[y, x, 0] = 0;
+                    }
+                    else
+                         if (imgBinarizata.Data[y, x, 0] == 255 && imgBinarizata.Data[y + 1, x - 1, 0] == 0)
+                    {
+                        resultImage.Data[y, x, 0] = 0;
+                    }
+                }
+            }
+            return resultImage;
+        }
+
+
+        public static Image<Gray, byte> Erodare(Image<Gray, byte> imgBinarizata)
+        {
+            Image<Gray, byte> resultImage = new Image<Gray, byte>(imgBinarizata.Data);
+
+            for (int y = 1; y < imgBinarizata.Height - 1; y++)
+            {
+                for (int x = 1; x < imgBinarizata.Width - 1; x++)
+                {
+                    if (imgBinarizata.Data[y, x, 0] == 0 && imgBinarizata.Data[y, x - 1, 0] == 255)
+                    {
+                        resultImage.Data[y, x, 0] = 255;
+                    }
+                    else
+                         if (imgBinarizata.Data[y, x, 0] == 0 && imgBinarizata.Data[y - 1, x - 1, 0] == 255)
+                    {
+                        resultImage.Data[y, x, 0] = 255;
+                    }
+                    else
+                         if (imgBinarizata.Data[y, x, 0] == 0 && imgBinarizata.Data[y - 1, x, 0] == 255)
+                    {
+                        resultImage.Data[y, x, 0] = 255;
+                    }
+                    else
+                         if (imgBinarizata.Data[y, x, 0] == 0 && imgBinarizata.Data[y + 1, x + 1, 0] == 255)
+                    {
+                        resultImage.Data[y, x, 0] = 255;
+                    }
+                    else
+                         if (imgBinarizata.Data[y, x, 0] == 0 && imgBinarizata.Data[y, x + 1, 0] == 255)
+                    {
+                        resultImage.Data[y, x, 0] = 255;
+                    }
+                    else
+                         if (imgBinarizata.Data[y, x, 0] == 0 && imgBinarizata.Data[y - 1, x + 1, 0] == 255)
+                    {
+                        resultImage.Data[y, x, 0] = 255;
+                    }
+                    else
+                         if (imgBinarizata.Data[y, x, 0] == 0 && imgBinarizata.Data[y + 1, x, 0] == 255)
+                    {
+                        resultImage.Data[y, x, 0] = 255;
+                    }
+                    else
+                         if (imgBinarizata.Data[y, x, 0] == 0 && imgBinarizata.Data[y + 1, x - 1, 0] == 255)
+                    {
+                        resultImage.Data[y, x, 0] = 255;
+                    }
+                }
+            }
+            return resultImage;
+        }
+
+
+        public static Image<Gray, byte> XorDilatare(double thresold, Image<Gray, byte> originalImage)
         {
             Image<Gray, byte> resultImage = new Image<Gray, byte>(originalImage.Size);
             resultImage = Binarizare(thresold, originalImage);
 
-            Image<Gray, byte> resultImageXor = new Image<Gray, byte>(resultImage.Size);
-            Image<Gray, byte> resultImage2 = new Image<Gray, byte>(resultImage.Data);
+            Image<Gray, byte> resultImageDilatare = Dilatare(resultImage);
 
-            for (int y = 1; y < resultImage.Height - 1; y++)
-            {
-                for (int x = 1; x < resultImage.Width - 1; x++)
-                {
-                    if (resultImage.Data[y, x, 0] == 255 && resultImage.Data[y, x - 1, 0] == 0)
-                    {
-                        resultImage2.Data[y, x, 0] = 0;
-                    }else
-                         if (resultImage.Data[y, x, 0] == 255 &&  resultImage.Data[y - 1, x - 1, 0] == 0)
-                    {
-                        resultImage2.Data[y, x, 0] = 0;
-                    }else
-                         if (resultImage.Data[y, x, 0] == 255 &&  resultImage.Data[y - 1, x, 0] == 0 )
-                    {
-                        resultImage2.Data[y, x, 0] = 0;
-                    }
-                    else
-                         if (resultImage.Data[y, x, 0] == 255 &&  resultImage.Data[y + 1, x + 1, 0] == 0)
-                    {
-                        resultImage2.Data[y, x, 0] = 0;
-                    }
-                }
-            }
+            Image<Gray, byte> resultImageXor = new Image<Gray, byte>(resultImage.Size);
 
 
             for (int y = 0; y < resultImage.Height; y++)
             {
                 for (int x = 0; x < resultImage.Width; x++)
                 {
-                    if (resultImage.Data[y, x, 0] == 0 && resultImage2.Data[y, x, 0] == 0)
+                    if (resultImage.Data[y, x, 0] == 0 && resultImageDilatare.Data[y, x, 0] == 0)
                     {
                         resultImageXor.Data[y, x, 0] = 0;
                     }
-                    else if (resultImage.Data[y, x, 0] == 0 && resultImage2.Data[y, x, 0] == 255)
+                    else if (resultImage.Data[y, x, 0] == 0 && resultImageDilatare.Data[y, x, 0] == 255)
                     {
                         resultImageXor.Data[y, x, 0] = 255;
                     }
-                    else if (resultImage.Data[y, x, 0] == 255 && resultImage2.Data[y, x, 0] == 0)
+                    else if (resultImage.Data[y, x, 0] == 255 && resultImageDilatare.Data[y, x, 0] == 0)
                     {
                         resultImageXor.Data[y, x, 0] = 255;
                     }
@@ -207,5 +291,82 @@ namespace ISIP_Algorithms.Tools
             return resultImageXor;
 
         }
+        public static Image<Gray, byte> XorErodare(double thresold, Image<Gray, byte> originalImage)
+        {
+            Image<Gray, byte> resultImage = new Image<Gray, byte>(originalImage.Size);
+            resultImage = Binarizare(thresold, originalImage);
+
+            Image<Gray, byte> resultImageErodare = Erodare(resultImage);
+
+            Image<Gray, byte> resultImageXor = new Image<Gray, byte>(resultImage.Size);
+
+
+            for (int y = 0; y < resultImage.Height; y++)
+            {
+                for (int x = 0; x < resultImage.Width; x++)
+                {
+                    if (resultImage.Data[y, x, 0] == 0 && resultImageErodare.Data[y, x, 0] == 0)
+                    {
+                        resultImageXor.Data[y, x, 0] = 0;
+                    }
+                    else if (resultImage.Data[y, x, 0] == 0 && resultImageErodare.Data[y, x, 0] == 255)
+                    {
+                        resultImageXor.Data[y, x, 0] = 255;
+                    }
+                    else if (resultImage.Data[y, x, 0] == 255 && resultImageErodare.Data[y, x, 0] == 0)
+                    {
+                        resultImageXor.Data[y, x, 0] = 255;
+                    }
+                    else
+                    {
+                        resultImageXor.Data[y, x, 0] = 0;
+                    }
+                }
+            }
+
+            return resultImageXor;
+
+        }
+
+        public static Image<Gray, byte> Rotatia(double unghi, Image<Gray, byte> originalImage)
+        {
+            Image<Gray, byte> resultImage = new Image<Gray, byte>(originalImage.Size);
+
+            double grade = unghi * (Math.PI / 180);
+
+            double xO = resultImage.Height / 2;
+            double yO = resultImage.Width / 2;
+
+
+
+            for (int y = 0; y < resultImage.Height; y++)
+            {
+                for (int x = 0; x < resultImage.Width; x++)
+                {
+
+                    double xc = Math.Cos(grade) * (x - xO) + Math.Sin(grade) * (y - yO) + xO;
+                    double yc = -Math.Sin(grade) * (x - xO) + Math.Cos(grade) * (y - yO) + yO;
+
+
+                    int x0 = (int)xc;
+                    int y0 = (int)yc;
+
+                    if (x0 > 0 && y0 > 0 && x0 < 255 && y0 < 255)
+                    {
+                        double val1 = (originalImage.Data[y0, x0 + 1, 0] - originalImage.Data[y0, x0, 0]) * (xc - x0) + originalImage.Data[y0, x0, 0];
+                        double val2 = (originalImage.Data[y0 + 1, x0 + 1, 0] - originalImage.Data[y0 + 1, x0, 0]) * (xc - x0) + originalImage.Data[y0 + 1, x0, 0];
+                        byte val3 = (byte)((val2 - val1) * (yc - y0) + val1);
+
+                        resultImage.Data[y, x, 0] = val3;
+                    }
+                    else
+                        resultImage.Data[y, x, 0] = 0;
+
+                }
+            }
+
+            return resultImage;
+        }
+
     }
 }

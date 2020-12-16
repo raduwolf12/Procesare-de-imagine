@@ -32,15 +32,19 @@
                 <MenuItem Header="Binarizare Color 3D" Click="Bnarizare_Color_3D" Name="BIN_COLOR_3D_ON" IsCheckable="True" IsEnabled="False"/>
                 <MenuItem Header="Binarizare Color 2D" Click="Bnarizare_Color_2D" Name="BIN_COLOR_2D_ON" IsCheckable="True" IsEnabled="False"/>
                 <MenuItem Header="Binarizare " Click="Binarizare"/>
-                <MenuItem Header="XOR" Click="XOR_Click"/>
-                
             </MenuItem>
+            
             <MenuItem Header="Filters">
                 <MenuItem Header="Filtrul Gaussian" Click="Filtrare_gausiana_Click"/>
                 <MenuItem Header="Filtrul Bilateral" Click="Filtrare_bilaterala_Click"/>
                 <MenuItem Header="Filtrul directional Sobel - margini orizontale" Click="Sobel_orizontal_Click"/>
                 <MenuItem Header="Filtrul directional Sobel - margini verticale" Click="Sobel_vertical_Click"/>
             </MenuItem>
+            <MenuItem Header="XOR">
+                <MenuItem Header="XOR prin dilatare" Click="XOR_Click"/>
+                <MenuItem Header="XOR prin erodare" Click="XOR_ClickErodare"/>
+            </MenuItem>
+            <MenuItem Header="Rotatie" Click="Rotatie_Click"/>
             <MenuItem Header="Save as original image" HorizontalAlignment="Right"
                       Click="saveAsOriginalMenuItem_Click"/>
         </Menu>

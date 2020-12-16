@@ -363,9 +363,39 @@ namespace ISIP_FrameworkGUI
 
         private void XOR_Click(object sender, RoutedEventArgs e)
         {
+            UserInputDialog dlg = new UserInputDialog("Valoare thresold binarizare ", new string[] { "t value: " });
             if (mainControl.OriginalGrayscaleImage != null)
             {
-                mainControl.ProcessedGrayscaleImage = Tools.Xor(100,mainControl.OriginalGrayscaleImage);
+                if (dlg.ShowDialog().Value == true)
+                {
+                    double d1 = (double)dlg.Values[0];
+                    mainControl.ProcessedGrayscaleImage = Tools.XorDilatare(d1, mainControl.OriginalGrayscaleImage);
+                }
+            }
+        }
+        private void XOR_ClickErodare(object sender, RoutedEventArgs e)
+        {
+            UserInputDialog dlg = new UserInputDialog("Valoare thresold binarizare ", new string[] { "t value: " });
+            if (mainControl.OriginalGrayscaleImage != null)
+            {
+                if (dlg.ShowDialog().Value == true)
+                {
+                    double d1 = (double)dlg.Values[0];
+                    mainControl.ProcessedGrayscaleImage = Tools.XorErodare(d1, mainControl.OriginalGrayscaleImage);
+                }
+            }
+        }
+
+        private void Rotatie_Click(object sender, RoutedEventArgs e)
+        {
+            UserInputDialog dlg = new UserInputDialog("Unghiul de rotatie(grade): ", new string[] { "unghiul de rotatie(grade): " });
+            if (mainControl.OriginalGrayscaleImage != null)
+            {
+                if (dlg.ShowDialog().Value == true)
+                {
+                    double d1 = (double)dlg.Values[0];
+                    mainControl.ProcessedGrayscaleImage = Tools.Rotatia(d1, mainControl.OriginalGrayscaleImage);
+                }
             }
         }
     }
