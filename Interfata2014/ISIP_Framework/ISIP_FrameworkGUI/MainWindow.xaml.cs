@@ -350,7 +350,7 @@ namespace ISIP_FrameworkGUI
         }
         private void Sobel_vertical_Click(object sender, RoutedEventArgs e)
         {
-            UserInputDialog dlg = new UserInputDialog("Filtrul directional Sobel - margini orizontale Dialog", new string[] { "t value: " });
+            UserInputDialog dlg = new UserInputDialog("Filtrul directional Sobel - margini verticale Dialog", new string[] { "t value: " });
             if (mainControl.OriginalGrayscaleImage != null)
             {
                 if (dlg.ShowDialog().Value == true)
@@ -397,6 +397,19 @@ namespace ISIP_FrameworkGUI
                     mainControl.ProcessedGrayscaleImage = Tools.Rotatia(d1, mainControl.OriginalGrayscaleImage);
                 }
             }
+        }
+
+        private void Hough_rapida_Click(object sender, RoutedEventArgs e)
+        {
+            //UserInputDialog dlg = new UserInputDialog("Hough rapid: ", new string[] { "threshold: " });
+                if (mainControl.OriginalGrayscaleImage != null)
+                {
+                    //if (dlg.ShowDialog().Value == true)
+                    //{
+                    //double d1 = (double)dlg.Values[0];
+                    mainControl.ProcessedGrayscaleImage = Tools.Hough_rapida(mainControl.OriginalGrayscaleImage);
+                    //mainControl.OriginalGrayscaleImage = Tools.Desenare_Hough_rapid(mainControl.OriginalGrayscaleImage, mainControl.ProcessedGrayscaleImage);
+                }
         }
     }
 }

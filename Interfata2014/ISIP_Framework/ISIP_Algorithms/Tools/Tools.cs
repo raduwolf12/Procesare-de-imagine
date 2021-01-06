@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
+using System.Windows;
 using Emgu.CV;
 using Emgu.CV.Structure;
+
+
 namespace ISIP_Algorithms.Tools
 {
     public class Tools
@@ -159,49 +160,47 @@ namespace ISIP_Algorithms.Tools
                 {
                     if (imgBinarizata.Data[y, x, 0] == 255 && imgBinarizata.Data[y, x - 1, 0] == 0)
                     {
-                        resultImage.Data[y, x, 0] = 0;
+                        resultImage.Data[y, x, 0] = 255;
                     }
                     else
                          if (imgBinarizata.Data[y, x, 0] == 255 && imgBinarizata.Data[y - 1, x - 1, 0] == 0)
                     {
-                        resultImage.Data[y, x, 0] = 0;
+                        resultImage.Data[y, x, 0] = 255;
                     }
                     else
                          if (imgBinarizata.Data[y, x, 0] == 255 && imgBinarizata.Data[y - 1, x, 0] == 0)
                     {
-                        resultImage.Data[y, x, 0] = 0;
+                        resultImage.Data[y, x, 0] = 255;
                     }
                     else
                          if (imgBinarizata.Data[y, x, 0] == 255 && imgBinarizata.Data[y + 1, x + 1, 0] == 0)
                     {
-                        resultImage.Data[y, x, 0] = 0;
+                        resultImage.Data[y, x, 0] = 255;
                     }
                     else
                          if (imgBinarizata.Data[y, x, 0] == 255 && imgBinarizata.Data[y , x + 1, 0] == 0)
                     {
-                        resultImage.Data[y, x, 0] = 0;
+                        resultImage.Data[y, x, 0] = 255;
                     }
                     else
                          if (imgBinarizata.Data[y, x, 0] == 255 && imgBinarizata.Data[y-1, x + 1, 0] == 0)
                     {
-                        resultImage.Data[y, x, 0] = 0;
+                        resultImage.Data[y, x, 0] = 255;
                     }
                     else
                          if (imgBinarizata.Data[y, x, 0] == 255 && imgBinarizata.Data[y + 1, x , 0] == 0)
                     {
-                        resultImage.Data[y, x, 0] = 0;
+                        resultImage.Data[y, x, 0] = 255;
                     }
                     else
                          if (imgBinarizata.Data[y, x, 0] == 255 && imgBinarizata.Data[y + 1, x - 1, 0] == 0)
                     {
-                        resultImage.Data[y, x, 0] = 0;
+                        resultImage.Data[y, x, 0] = 255;
                     }
                 }
             }
             return resultImage;
         }
-
-
         public static Image<Gray, byte> Erodare(Image<Gray, byte> imgBinarizata)
         {
             Image<Gray, byte> resultImage = new Image<Gray, byte>(imgBinarizata.Data);
@@ -212,49 +211,47 @@ namespace ISIP_Algorithms.Tools
                 {
                     if (imgBinarizata.Data[y, x, 0] == 0 && imgBinarizata.Data[y, x - 1, 0] == 255)
                     {
-                        resultImage.Data[y, x, 0] = 255;
+                        resultImage.Data[y, x, 0] = 0;
                     }
                     else
                          if (imgBinarizata.Data[y, x, 0] == 0 && imgBinarizata.Data[y - 1, x - 1, 0] == 255)
                     {
-                        resultImage.Data[y, x, 0] = 255;
+                        resultImage.Data[y, x, 0] = 0;
                     }
                     else
                          if (imgBinarizata.Data[y, x, 0] == 0 && imgBinarizata.Data[y - 1, x, 0] == 255)
                     {
-                        resultImage.Data[y, x, 0] = 255;
+                        resultImage.Data[y, x, 0] = 0;
                     }
                     else
                          if (imgBinarizata.Data[y, x, 0] == 0 && imgBinarizata.Data[y + 1, x + 1, 0] == 255)
                     {
-                        resultImage.Data[y, x, 0] = 255;
+                        resultImage.Data[y, x, 0] = 0;
                     }
                     else
                          if (imgBinarizata.Data[y, x, 0] == 0 && imgBinarizata.Data[y, x + 1, 0] == 255)
                     {
-                        resultImage.Data[y, x, 0] = 255;
+                        resultImage.Data[y, x, 0] = 0;
                     }
                     else
                          if (imgBinarizata.Data[y, x, 0] == 0 && imgBinarizata.Data[y - 1, x + 1, 0] == 255)
                     {
-                        resultImage.Data[y, x, 0] = 255;
+                        resultImage.Data[y, x, 0] = 0;
                     }
                     else
                          if (imgBinarizata.Data[y, x, 0] == 0 && imgBinarizata.Data[y + 1, x, 0] == 255)
                     {
-                        resultImage.Data[y, x, 0] = 255;
+                        resultImage.Data[y, x, 0] = 0;
                     }
                     else
                          if (imgBinarizata.Data[y, x, 0] == 0 && imgBinarizata.Data[y + 1, x - 1, 0] == 255)
                     {
-                        resultImage.Data[y, x, 0] = 255;
+                        resultImage.Data[y, x, 0] = 0;
                     }
                 }
             }
             return resultImage;
         }
-
-
         public static Image<Gray, byte> XorDilatare(double thresold, Image<Gray, byte> originalImage)
         {
             Image<Gray, byte> resultImage = new Image<Gray, byte>(originalImage.Size);
@@ -368,5 +365,152 @@ namespace ISIP_Algorithms.Tools
             return resultImage;
         }
 
+
+       
+        public static Image<Gray,byte> Hough_rapida( Image<Gray, byte> InputImage, double thresold=100)
+        {
+            // doua cadrane si razele negative
+            double d = Math.Sqrt(InputImage.Height * InputImage.Height + InputImage.Width * InputImage.Width);
+
+            Image<Gray, byte> resultImage = new Image<Gray, byte>( 2* (int)(d + 0.5) + 1, 181);
+
+
+            double[,] Sx = new double[3, 3] { { -1, 0, 1 }, { -2, 0, 2 }, { -1, 0, 1 } };
+            double[,] Sy = new double[3, 3] { { -1, -2, -1 }, { 0, 0, 0 }, { 1, 2, 1 } };
+
+            int[,] matrix = new int[2 * (int)(d + 0.5) + 1, 181];
+
+            for (int y = 1; y < InputImage.Height - 1; y++)
+            {
+                for (int x = 1; x < InputImage.Width - 1; x++)
+                {
+                   
+                            double Fx = 0;
+                            double Fy = 0;
+                            for (int i = 0; i <= 2; i++)
+                            {
+                                for (int j = 0; j <= 2; j++)
+                                {
+                                    Fx += InputImage.Data[y + i - 1, x + j - 1, 0] * Sx[i, j];
+                                    Fy += InputImage.Data[y + i - 1, x + j - 1, 0] * Sy[i, j];
+                                }
+                            }
+                            double val = Math.Sqrt(Fx * Fx + Fy * Fy);
+                            if (val >= thresold)
+                            {
+                                //calculez unghiul teta care este atan din fy,fx
+                                var theta = Math.PI / 2;
+                                if (Fx!=0)
+                                {
+                                     theta = Math.Atan(Fy / Fx);
+                                }
+                                
+                                var unghi = theta * 180 / Math.PI;
+                           
+                                var r = x * Math.Cos(theta) + y * Math.Sin(theta);
+                            
+                                matrix[(int)(r + 0.5) + (int)d, (int)unghi + 90]++;
+                            }                    
+                }
+            }
+
+            for (int y = 0; y <= 2 * (int)(d + 0.5); y++)
+            {
+                for (int x = 0; x < 181; x++)
+                {
+                    resultImage.Data[x, y, 0] = (byte)( matrix[y, x] + 0.5);
+                }
+            }
+
+
+            Image<Gray, byte> resultImage2 = new Image<Gray, byte>(2 * (int)(d + 0.5) + 1, 181);
+            for (int y = 0; y <= 2 * (int)(d + 0.5); y++)
+            {
+                for (int x = 0; x < 181; x++)
+                {
+                    resultImage2.Data[180-x, y, 0] = resultImage.Data[x, y, 0];
+                }
+            }
+
+            return resultImage2; 
+        }
+   
+        public static Image<Gray, byte> Desenare_Hough_rapid(Image<Gray, byte> InputImage, Image<Gray, byte> houghImage)
+        {
+            double d = Math.Sqrt(InputImage.Height * InputImage.Height + InputImage.Width * InputImage.Width);
+
+            Image<Gray, byte> resultImage = new Image<Gray, byte>(2 * (int)(d + 0.5) + 1, 181);
+            List<Point> coordonate = new List<Point>();
+
+            for (int y = 0; y <= 2 * (int)(d + 0.5); y++)
+            {
+                for (int x = 0; x < 181; x++)
+                {
+
+                    if(houghImage.Data[x,y,0]>50)
+                    {
+
+                        Point p = new Point(y, x);
+                        coordonate.Add(p);
+
+                    }
+
+
+                }
+            }
+            Point pMaxLocal = new Point(0, 0);
+            Point pMaxLocal1 = new Point(0, 0);
+            List<Point> coordonate2 = new List<Point>();
+
+            for (int i =0;i<coordonate.Count;i++)
+            {
+                pMaxLocal = ComparePoint(pMaxLocal, coordonate.ElementAt(i));
+                if(pMaxLocal!=pMaxLocal1)
+                {
+                    coordonate2.Add(pMaxLocal);
+                }
+                pMaxLocal1 = pMaxLocal;
+            }
+            List<Point> coordonate3 = new List<Point>();
+            for (int i = 0; i < coordonate2.Count; i++)
+            {
+                double r = coordonate2.ElementAt(i).X - d;
+                double teta = (coordonate2.ElementAt(i).Y - 90)/(180 / Math.PI);
+                int x = (int)(r * Math.Cos(teta));
+                int y = (int)(r * Math.Sin(teta));
+                coordonate3.Add(new Point(x, y));
+            }
+            //int r1,r2;
+            //int t1, t2;
+            //var dreapta = Math.Sqrt(r1 * r1 + r2 * r2 - 2 * r2 * r2 * Math.Cos(t2 - t1); 
+            //x = r cos θ, y = r sin θ
+
+
+            //for (int y = 0; y < InputImage.Height; y++)
+            //     {
+            //        for (int x = 0; x < InputImage.Width; x++)
+            //        {
+                   
+            //        }
+            //    }
+
+
+                    return null;
+        }
+        public static Point ComparePoint(Point p1, Point p2)
+        {
+            if(p1.X ==0 && p1.Y == 0)
+            {
+                return p2;
+            }
+            if (p1.X - 60 <= p2.X && p2.X <= p1.X + 60)
+            {
+                return p1;
+            } else
+                return p2;
+            
+        }
+
     }
+
 }

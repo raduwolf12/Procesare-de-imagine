@@ -45,6 +45,7 @@
                 <MenuItem Header="XOR prin erodare" Click="XOR_ClickErodare"/>
             </MenuItem>
             <MenuItem Header="Rotatie" Click="Rotatie_Click"/>
+            <MenuItem Header="Hough rapida" Click="Hough_rapida_Click"/>
             <MenuItem Header="Save as original image" HorizontalAlignment="Right"
                       Click="saveAsOriginalMenuItem_Click"/>
         </Menu>
