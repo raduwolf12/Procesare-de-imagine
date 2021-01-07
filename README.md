@@ -1,1 +1,1 @@
-# Procesare-de-imagine
+# Image procesing in C#
