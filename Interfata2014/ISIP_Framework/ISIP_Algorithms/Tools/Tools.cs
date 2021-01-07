@@ -484,18 +484,21 @@ namespace ISIP_Algorithms.Tools
             //int t1, t2;
             //var dreapta = Math.Sqrt(r1 * r1 + r2 * r2 - 2 * r2 * r2 * Math.Cos(t2 - t1); 
             //x = r cos θ, y = r sin θ
+            //r = x cos(theta) + y sin(theta)
+            //x= r-xcos(teta)/sin(teta)
+
 
 
             //for (int y = 0; y < InputImage.Height; y++)
             //     {
             //        for (int x = 0; x < InputImage.Width; x++)
             //        {
-                   
+
             //        }
             //    }
 
 
-                    return null;
+            return null;
         }
         public static Point ComparePoint(Point p1, Point p2)
         {
