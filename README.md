@@ -24,4 +24,4 @@
 ## Hough:
 - Fast hough 
 ## Screenshot
-![Preview1](https://github.com/raduwolf12/Muzeul-Antipa/blob/master/imgs/img1.png)
+![Preview1](https://github.com/raduwolf12/Procesare-de-imagine/blob/main/Interfata2014/ISIP_Framework/Images/Capture.PNG)
